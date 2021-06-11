@@ -1,18 +1,20 @@
 import pandas as pd 
 songs = pd.read_csv("songs.csv")
 songs = songs.set_index('Title')
-songs.head() 
-
-
 def get_reward(skiped):
-    if skiped == 'skiped':
-        reward=1
-    elif skiped == 'not skiped':
-        reward = 0
+    if skiped == 1:
+        reward=-1
+    elif skiped == 0:
+        reward = 1
     return reward 
-   
-def get_user_behavior(): #function for memorizing user behavior, he skipped or not
-    list=[]
-    skiped = 'skiped' #input reaction from user, let's suppose we got user's reacion 
-    
-    return skiped 
+# give it a song and returns a list of features of the songs this is the first value of a specific state of our env
+def get_song_features(song):
+    feature = songs.loc[song].to_frame()
+    song_features = feature[feature[song]== 1].index.tolist()
+    return song_features
+# create a record of user behavior about a song's features 
+record_user_behavior={}
+def get_user_behavior(song): #function for memorizing user behavior, he skipped or not
+    skiped = 1 #input reaction from user, let's suppose we got user's reacion
+    record_user_behavior[skiped] = get_song_features(song) 
+    return record_user_behavior
