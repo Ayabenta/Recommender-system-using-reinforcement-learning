@@ -13,8 +13,19 @@ def get_song_features(song):
     song_features = feature[feature[song]== 1].index.tolist()
     return song_features
 # create a record of user behavior about a song's features 
+ftr=songs.index.tolist()
 record_user_behavior={}
-def get_user_behavior(song): #function for memorizing user behavior, he skipped or not
-    skiped = 1 #input reaction from user, let's suppose we got user's reacion
-    record_user_behavior[skiped] = get_song_features(song) 
+def get_user_behavior(song):
+    #function for memorizing user behavior, he skipped or not
+    print(song)
+    record = input("Enter your value: ")
+    print(record)
+    record_user_behavior[song] = record
     return record_user_behavior
+
+for i in range (0,5):
+    song= random.choice(ftr)
+    user_history = record = get_user_behavior(song)
+#now we need to get a numpy array with 5*21 dimension (5steps and 21 features)
+songs_list = [*user_history]
+songs.loc[songs_list].to_numpy()
